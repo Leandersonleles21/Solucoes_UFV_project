@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Material Gratuito - Soluções UFV</title>
+  <link rel="icon" type="image/png" href="/logo-removebg-preview.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="/" class="logo">
+      <img src="/logo-removebg-preview.png" alt="Soluções UFV" class="logo-img">
+      <span>SOLUÇÕES UFV</span>
+    </a>
+    <nav>
+      <a href="/#sobre">Sobre</a>
+      <a href="/#servicos">Serviços</a>
+      <a href="/#clientes">Clientes</a>
+      <a href="/#blog">Blog</a>
+    </nav>
+    <a class="btn" href="/#contato">Contato</a>
+  </div>
+</header>
+
+<!-- Seção do Formulário -->
+<section class="material-section">
+  <div class="container">
+    
+    <!-- Formulário (estado inicial) -->
+    <div id="form-container" class="material-card">
+      <h1>Material Gratuito</h1>
+      <p id="material-title" class="material-subtitle">Preencha seus dados para liberar o download</p>
+      
+      <form id="material-form" class="material-form">
+        <!-- Campos Ocultos para Validação/Segurança (Web3Forms) -->
+        <input type="hidden" name="access_key" value="132b892f-4a00-4d26-b7d4-f42e76fb353e">
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+        
+        <div class="form-group">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" name="nome" required placeholder="Seu nome">
+        </div>
+        
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required placeholder="seu@email.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="telefone">Telefone (opcional)</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" pattern="[\(]?[0-9]{2}[\)]?\s?[0-9]{4,5}[-\s]?[0-9]{4}">
+          <small style="color: #666; font-size: 11px; margin-top: 4px; display: block;">Ex: (31) 90000-0000</small>
+        </div>
+        
+        <div class="form-group">
+          <label for="empresa">Empresa (opcional)</label>
+          <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa">
+        </div>
+        
+        <!-- Campo oculto com informações do material -->
+        <input type="hidden" id="material-info" name="material" value="">
+        
+        <button type="submit" class="submit-btn">LIBERAR DOWNLOAD</button>
+        
+        <p class="form-disclaimer">
+          Seus dados estão seguros e não serão compartilhados.
+        </p>
+      </form>
+    </div>
+    
+    <!-- Sucesso (estado após submit) -->
+    <div id="success-container" class="material-card" style="display: none;">
+      <div class="success-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+      </div>
+      <h1>Download Liberado!</h1>
+      <p id="success-message" class="material-subtitle">Obrigado por se cadastrar. Clique no botão abaixo para baixar.</p>
+      
+      <a id="download-link" class="download-final-btn" href="#" download>
+        BAIXAR MATERIAL
+      </a>
+      
+      <a href="/#blog" class="back-link">Voltar ao Blog</a>
+    </div>
+    
+  </div>
+</section>
+
+<footer id="contato">
+  <div class="container">
+    © 2026 Soluções UFV — Todos os direitos reservados
+  </div>
+</footer>
+
+<a
+  href="https://wa.me/5531972094074?text=Olá!%20Gostaria%20de%20falar%20com%20a%20Soluções%20UFV."
+  class="whatsapp-float"
+  target="_blank" rel="noopener noreferrer"
+  aria-label="Falar no WhatsApp"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+    <path fill="currentColor" d="M19.11 17.2c-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.7-.62-1.17-1.38-1.3-1.62-.14-.24-.01-.37.1-.49.1-.1.24-.26.36-.39.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.48-.4-.42-.54-.42h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.59 4.12 3.63.58.25 1.04.4 1.39.51.58.18 1.1.15 1.52.09.46-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/>
+    <path fill="currentColor" d="M16.03 3.2c-7.06 0-12.8 5.73-12.8 12.8 0 2.26.6 4.47 1.73 6.4L3 29l6.8-1.77c1.87 1.02 3.97 1.56 6.12 1.56h.01c7.06 0 12.8-5.73 12.8-12.8 0-3.42-1.33-6.64-3.75-9.05A12.72 12.72 0 0 0 16.03 3.2zm0 23.45h-.01c-1.92 0-3.8-.52-5.44-1.5l-.39-.23-4.03 1.05 1.08-3.93-.25-.4a10.63 10.63 0 0 1-1.64-5.65c0-5.9 4.8-10.7 10.7-10.7 2.86 0 5.55 1.11 7.57 3.13a10.62 10.62 0 0 1 3.13 7.56c0 5.9-4.8 10.7-10.72 10.7z"/>
+  </svg>
+</a>
+
+<script type="module" src="/src/material.js"></script>
+</body>
+</html>

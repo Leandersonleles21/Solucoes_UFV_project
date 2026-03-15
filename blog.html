@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog - Soluções UFV</title>
+  <link rel="icon" type="image/png" href="/logo-removebg-preview.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="top-bar">
+  <div class="container top-bar-content">
+    <a href="https://wa.me/5531972094074" class="top-contact">
+      <span class="whatsapp-icon">📞</span> (31) 97209-4074
+    </a>
+    <a href="mailto:contato@solucoesufv.com.br" class="top-contact">
+      <span class="email-icon">✉</span> contato@solucoesufv.com.br
+    </a>
+  </div>
+</div>
+
+<header>
+  <div class="container nav">
+    <a href="/" class="logo">
+      <img src="/logo-removebg-preview.png" alt="Soluções UFV" class="logo-img">
+      <span>SOLUÇÕES UFV</span>
+    </a>
+    <nav>
+      <a href="/#sobre">Sobre</a>
+      <a href="/#servicos">Serviços</a>
+      <a href="/#clientes">Clientes</a>
+      <a href="/#blog">Blog</a>
+    </nav>
+    <a class="btn" href="/#contato">Contato</a>
+  </div>
+</header>
+
+<section class="blog-list-hero">
+  <div class="container">
+    <h1>Blog</h1>
+    <p>Conteúdos sobre Engenharia de Produção e Mecânica</p>
+  </div>
+</section>
+
+<section class="blog-list-section">
+  <div class="container">
+    <div class="blog-filters">
+      <div class="filter-group">
+        <label for="filter-search">Buscar:</label>
+        <input type="text" id="filter-search" placeholder="Pesquisar por título...">
+      </div>
+      <div class="filter-group">
+        <label for="filter-category">Categoria:</label>
+        <select id="filter-category">
+          <option value="">Todas</option>
+        </select>
+      </div>
+      <div class="filter-group filter-checkbox">
+        <input type="checkbox" id="filter-material">
+        <label for="filter-material">Apenas com Material Gratuito</label>
+      </div>
+    </div>
+    
+    <div id="blog-list-grid" class="blog-list-grid">
+      <p class="loading-text">Carregando posts...</p>
+    </div>
+    
+    <div id="pagination" class="pagination">
+      <!-- Paginação será inserida via JS -->
+    </div>
+  </div>
+</section>
+
+<footer id="contato">
+  <div class="container footer-content">
+    <div class="footer-info">
+      <div class="footer-contact-item">
+        <span class="footer-icon">📞</span>
+        <span>(31) 97209-4074</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-icon">✉</span>
+        <span>contato@solucoesufv.com.br</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-icon">📍</span>
+        <span>UFV - Departamento de Engenharia de Produção e Mecânica - Viçosa/MG</span>
+      </div>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/ufv.solucoes.consultoria/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/solucoesufv/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/company/solucoesconsultoria/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      Copyright - Soluções Consultoria
+    </div>
+  </div>
+</footer>
+
+<a
+  href="https://wa.me/5531972094074?text=Olá!%20Gostaria%20de%20falar%20com%20a%20Soluções%20UFV."
+  class="whatsapp-float"
+  target="_blank" rel="noopener noreferrer"
+  aria-label="Falar no WhatsApp"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+    <path fill="currentColor" d="M19.11 17.2c-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.7-.62-1.17-1.38-1.3-1.62-.14-.24-.01-.37.1-.49.1-.1.24-.26.36-.39.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.48-.4-.42-.54-.42h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.59 4.12 3.63.58.25 1.04.4 1.39.51.58.18 1.1.15 1.52.09.46-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/>
+    <path fill="currentColor" d="M16.03 3.2c-7.06 0-12.8 5.73-12.8 12.8 0 2.26.6 4.47 1.73 6.4L3 29l6.8-1.77c1.87 1.02 3.97 1.56 6.12 1.56h.01c7.06 0 12.8-5.73 12.8-12.8 0-3.42-1.33-6.64-3.75-9.05A12.72 12.72 0 0 0 16.03 3.2zm0 23.45h-.01c-1.92 0-3.8-.52-5.44-1.5l-.39-.23-4.03 1.05 1.08-3.93-.25-.4a10.63 10.63 0 0 1-1.64-5.65c0-5.9 4.8-10.7 10.7-10.7 2.86 0 5.55 1.11 7.57 3.13a10.62 10.62 0 0 1 3.13 7.56c0 5.9-4.8 10.7-10.72 10.7z"/>
+  </svg>
+</a>
+
+<script type="module" src="/src/blogList.js"></script>
+</body>
+</html>

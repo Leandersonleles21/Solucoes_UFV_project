@@ -12,6 +12,7 @@
     "vite": "^7.3.1"
   },
   "dependencies": {
-    "contentful": "^11.10.4"
+    "contentful": "^11.10.4",
+    "puppeteer": "^24.39.1"
   }
 }

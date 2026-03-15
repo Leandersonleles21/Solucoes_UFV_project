@@ -36,7 +36,9 @@ function renderBlogPosts(posts) {
   blogTrack.innerHTML = '';
   
   if (posts.length === 0) {
-    blogTrack.innerHTML = '<p>Nenhum post encontrado.</p>';
+    blogTrack.innerHTML = '<p style="text-align: center; width: 100%; font-weight: 500; color: var(--primary);">Nenhum post encontrado.</p>';
+    blogTrack.style.animation = 'none';
+    blogTrack.style.justifyContent = 'center';
     return;
   }
   

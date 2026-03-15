@@ -24,6 +24,7 @@
 
 import './style.css';
 import './whatsappWidget.js';
+import './menu.js';
 
 // Pegar parâmetros da URL
 function getUrlParams() {

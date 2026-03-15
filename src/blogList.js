@@ -6,6 +6,7 @@
 import './style.css';
 import { getEntries } from './contentfulClient.js';
 import './whatsappWidget.js';
+import './menu.js';
 import { escapeHTML } from './utils.js';
 
 const POSTS_PER_PAGE = 6;

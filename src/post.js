@@ -6,6 +6,7 @@
 import './style.css';
 import contentfulClient, { getEntries } from './contentfulClient.js';
 import './whatsappWidget.js';
+import './menu.js';
 import { escapeHTML } from './utils.js';
 
 // Pegar o ID do post da URL

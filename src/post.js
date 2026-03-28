@@ -16,60 +16,165 @@ function getPostIdFromUrl() {
 }
 
 // Renderizar rich text do Contentful
+function sanitizeUrl(url) {
+  if (typeof url !== 'string') return '#';
+
+  const trimmedUrl = url.trim();
+  if (!trimmedUrl) return '#';
+
+  if (trimmedUrl.startsWith('//')) {
+    return `https:${trimmedUrl}`;
+  }
+
+  if (trimmedUrl.startsWith('/') || trimmedUrl.startsWith('#')) {
+    return trimmedUrl;
+  }
+
+  try {
+    const parsed = new URL(trimmedUrl, 'https://example.com');
+    const protocol = parsed.protocol.toLowerCase();
+
+    if (['http:', 'https:', 'mailto:', 'tel:'].includes(protocol)) {
+      return trimmedUrl;
+    }
+  } catch {
+    return '#';
+  }
+
+  return '#';
+}
+
+function applyTextMarks(text, marks = []) {
+  return marks.reduce((result, mark) => {
+    switch (mark.type) {
+      case 'bold':
+        return `<strong>${result}</strong>`;
+      case 'italic':
+        return `<em>${result}</em>`;
+      case 'underline':
+        return `<u>${result}</u>`;
+      case 'code':
+        return `<code>${result}</code>`;
+      default:
+        return result;
+    }
+  }, text);
+}
+
+function renderInlineNode(node) {
+  if (!node) return '';
+
+  switch (node.nodeType) {
+    case 'text': {
+      const text = escapeHTML(node.value || '');
+      return applyTextMarks(text, node.marks || []);
+    }
+    case 'hyperlink': {
+      const href = sanitizeUrl(node.data?.uri || '#');
+      const label = renderInlineNodes(node.content || []);
+      const linkText = label || escapeHTML(href);
+      return `<a href="${escapeHTML(href)}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
+    }
+    case 'asset-hyperlink': {
+      const fileUrl = node.data?.target?.fields?.file?.url || '#';
+      const href = sanitizeUrl(fileUrl.startsWith('//') ? `https:${fileUrl}` : fileUrl);
+      const label = renderInlineNodes(node.content || []);
+      const linkText = label || 'Arquivo';
+      return `<a href="${escapeHTML(href)}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
+    }
+    case 'entry-hyperlink': {
+      const label = renderInlineNodes(node.content || []);
+      return label || '';
+    }
+    default:
+      return renderInlineNodes(node.content || []);
+  }
+}
+
+function renderInlineNodes(nodes = []) {
+  return nodes.map(renderInlineNode).join('');
+}
+
+function renderListItem(itemNode) {
+  if (!itemNode?.content) return '';
+
+  const itemHtml = itemNode.content.map(child => {
+    if (child.nodeType === 'paragraph') {
+      return renderInlineNodes(child.content || []);
+    }
+
+    return renderBlockNode(child);
+  }).join('');
+
+  return `<li>${itemHtml}</li>`;
+}
+
+function renderBlockNode(node) {
+  if (!node) return '';
+
+  switch (node.nodeType) {
+    case 'paragraph': {
+      const content = renderInlineNodes(node.content || []);
+      const plainText = content.replace(/<[^>]*>/g, '').trim();
+      return plainText ? `<p>${content}</p>` : '';
+    }
+    case 'heading-1':
+      return `<h1>${renderInlineNodes(node.content || [])}</h1>`;
+    case 'heading-2':
+      return `<h2>${renderInlineNodes(node.content || [])}</h2>`;
+    case 'heading-3':
+      return `<h3>${renderInlineNodes(node.content || [])}</h3>`;
+    case 'heading-4':
+      return `<h4>${renderInlineNodes(node.content || [])}</h4>`;
+    case 'unordered-list': {
+      const items = (node.content || []).map(renderListItem).join('');
+      return `<ul>${items}</ul>`;
+    }
+    case 'ordered-list': {
+      const items = (node.content || []).map(renderListItem).join('');
+      return `<ol>${items}</ol>`;
+    }
+    case 'blockquote': {
+      const quote = (node.content || []).map(child => {
+        if (child.nodeType === 'paragraph') {
+          return renderInlineNodes(child.content || []);
+        }
+        return renderInlineNodes(child.content || []);
+      }).join('<br>');
+
+      return quote.trim() ? `<blockquote>${quote}</blockquote>` : '';
+    }
+    case 'hr':
+      return '<hr>';
+    case 'embedded-asset-block': {
+      const assetFields = node.data?.target?.fields;
+      const fileUrl = assetFields?.file?.url;
+      const title = assetFields?.title || '';
+      const description = assetFields?.description || '';
+
+      if (!fileUrl) return '';
+
+      const imageUrl = fileUrl.startsWith('//') ? `https:${fileUrl}` : fileUrl;
+      const safeImageUrl = sanitizeUrl(imageUrl);
+      const altText = escapeHTML(description || title || 'Imagem do post');
+      const caption = escapeHTML(title || description || '');
+
+      return `
+        <figure class="post-inline-image">
+          <img src="${escapeHTML(safeImageUrl)}" alt="${altText}" loading="lazy" decoding="async">
+          ${caption ? `<figcaption>${caption}</figcaption>` : ''}
+        </figure>
+      `;
+    }
+    default:
+      return '';
+  }
+}
+
 function renderRichText(richText) {
   if (!richText || !richText.content) return '';
-  
-  let html = '';
-  
-  richText.content.forEach(node => {
-    switch (node.nodeType) {
-      case 'paragraph':
-        const text = node.content?.map(c => escapeHTML(c.value) || '').join('') || '';
-        if (text.trim()) {
-          html += `<p>${text}</p>`;
-        }
-        break;
-      case 'heading-1':
-        html += `<h1>${node.content?.map(c => escapeHTML(c.value) || '').join('')}</h1>`;
-        break;
-      case 'heading-2':
-        html += `<h2>${node.content?.map(c => escapeHTML(c.value) || '').join('')}</h2>`;
-        break;
-      case 'heading-3':
-        html += `<h3>${node.content?.map(c => escapeHTML(c.value) || '').join('')}</h3>`;
-        break;
-      case 'heading-4':
-        html += `<h4>${node.content?.map(c => escapeHTML(c.value) || '').join('')}</h4>`;
-        break;
-      case 'unordered-list':
-        html += '<ul>';
-        node.content?.forEach(item => {
-          const listText = item.content?.[0]?.content?.map(c => escapeHTML(c.value) || '').join('') || '';
-          html += `<li>${listText}</li>`;
-        });
-        html += '</ul>';
-        break;
-      case 'ordered-list':
-        html += '<ol>';
-        node.content?.forEach(item => {
-          const listText = item.content?.[0]?.content?.map(c => escapeHTML(c.value) || '').join('') || '';
-          html += `<li>${listText}</li>`;
-        });
-        html += '</ol>';
-        break;
-      case 'blockquote':
-        const quoteText = node.content?.[0]?.content?.map(c => escapeHTML(c.value) || '').join('') || '';
-        html += `<blockquote>${quoteText}</blockquote>`;
-        break;
-      case 'hr':
-        html += '<hr>';
-        break;
-      default:
-        break;
-    }
-  });
-  
-  return html;
+
+  return richText.content.map(renderBlockNode).join('');
 }
 
 // Carregar o post

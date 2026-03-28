@@ -26,6 +26,36 @@ import './style.css';
 import './whatsappWidget.js';
 import './menu.js';
 
+function safeDecodeURIComponent(value) {
+  if (typeof value !== 'string') return '';
+
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+function getAllowedDownloadUrl(rawUrl) {
+  const decodedUrl = safeDecodeURIComponent(rawUrl).trim();
+  if (!decodedUrl) return '#';
+
+  try {
+    const parsedUrl = new URL(decodedUrl);
+    const hostname = parsedUrl.hostname.toLowerCase();
+    const isHttps = parsedUrl.protocol === 'https:';
+    const isAllowedHost = hostname === 'ctfassets.net' || hostname.endsWith('.ctfassets.net');
+
+    if (isHttps && isAllowedHost) {
+      return parsedUrl.toString();
+    }
+  } catch {
+    return '#';
+  }
+
+  return '#';
+}
+
 // Pegar parâmetros da URL
 function getUrlParams() {
   const params = new URLSearchParams(window.location.search);
@@ -39,6 +69,8 @@ function getUrlParams() {
 // Inicialização
 function init() {
   const { fileUrl, fileName, postTitle } = getUrlParams();
+  const decodedPostTitle = safeDecodeURIComponent(postTitle);
+  const decodedFileName = safeDecodeURIComponent(fileName);
   
   // Verificar se tem arquivo para download
   if (!fileUrl) {
@@ -51,12 +83,12 @@ function init() {
   // Mostrar título do material se disponível
   if (postTitle) {
     document.getElementById('material-title').textContent = 
-      `Material do post: "${decodeURIComponent(postTitle)}"`;
-    document.title = `${decodeURIComponent(postTitle)} - Material Gratuito`;
+      `Material do post: "${decodedPostTitle}"`;
+    document.title = `${decodedPostTitle} - Material Gratuito`;
   }
   
   // Preencher campo oculto com info do material
-  document.getElementById('material-info').value = postTitle ? decodeURIComponent(postTitle) : fileName;
+  document.getElementById('material-info').value = postTitle ? decodedPostTitle : decodedFileName;
   
   // Configurar formulário
   setupForm(fileUrl, fileName);
@@ -131,13 +163,14 @@ function showSuccess(fileUrl, fileName) {
   
   // Configurar link de download
   const downloadLink = document.getElementById('download-link');
-  let safeUrl = decodeURIComponent(fileUrl);
-  // Proteção contra injeção de link javascript/XSS
-  if (!safeUrl.startsWith('http://') && !safeUrl.startsWith('https://')) {
-    safeUrl = '#';
-  }
+  const safeUrl = getAllowedDownloadUrl(fileUrl);
   downloadLink.href = safeUrl;
-  downloadLink.setAttribute('download', decodeURIComponent(fileName));
+  downloadLink.setAttribute('download', safeDecodeURIComponent(fileName));
+
+  if (safeUrl === '#') {
+    downloadLink.textContent = 'DOWNLOAD BLOQUEADO (LINK INVÁLIDO)';
+    downloadLink.setAttribute('aria-disabled', 'true');
+  }
   
   // Scroll para o topo
   window.scrollTo({ top: 0, behavior: 'smooth' });

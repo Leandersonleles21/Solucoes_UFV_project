@@ -17,11 +17,8 @@ let categories = new Set();
 
 // Inicialização
 async function init() {
-  console.log('🚀 Página de Blog iniciada');
-  
   // Buscar posts do Contentful
   allPosts = await getEntries('blogPost');
-  console.log('Posts do Contentful:', allPosts);
   
   // Extrair categorias únicas
   allPosts.forEach(post => {

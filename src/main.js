@@ -11,11 +11,8 @@ import { escapeHTML } from './utils.js';
 
 // Inicialização da aplicação
 async function init() {
-  console.log('🚀 Aplicação Soluções UFV iniciada');
-  
   // Buscar posts do Contentful
   const posts = await getEntries('blogPost');
-  console.log('Posts do Contentful:', posts);
   
   // Renderizar posts no blog
   renderBlogPosts(posts);
